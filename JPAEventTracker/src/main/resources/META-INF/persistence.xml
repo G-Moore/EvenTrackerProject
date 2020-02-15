@@ -13,7 +13,7 @@
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/mountain?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=MST" />
+				value="jdbc:mysql://localhost:3306/Event?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=MST" />
 			<property name="javax.persistence.jdbc.user" value="mountain" />
 			<property name="javax.persistence.jdbc.password" value="mountain" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
