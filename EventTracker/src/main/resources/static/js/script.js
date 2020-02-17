@@ -1,10 +1,10 @@
 window.addEventListener("load", function(e) {
 	console.log("Doc Loaded");
-	inti();
+	init();
 });
 
-function inti() {
-	
+function init() {
+
 	document.getElementById("lookup").addEventListener("click", function(e) {
 		e.preventDefault();
 		console.log("Button Clicked");
@@ -15,22 +15,43 @@ function inti() {
 		}
 	});
 
+	document.getElementById("submitUpdateMtn").addEventListener("click", function(e) {
+		e.preventDefault();
+		console.log("Update Button Clicked");
+		var mtnId = document.updateMtnForm.mid.value;
+		console.log(mtnId);
+		if (!isNaN(mtnId) && mtnId > 0) {
+			console.log(mtnId);
+			updateMtn(mtnId);
+		}
+	});
+
 	document.getElementById("showAll").addEventListener("click", function(e) {
 		e.preventDefault();
 		console.log("All Mtn Button Clicked");
-		getAllMtn(); // TODO write getAllMtn method
-	});
-	
-	document.getElementById("submitAddMtn").addEventListener("click", function(e) {
-		e.preventDefault();
-		console.log("Add Mtn Button Clicked");
-		addMtn(); // TODO write addMtn method
+		getAllMtn(); 
 	});
 
-	
+	document.getElementById("submitAddMtn").addEventListener("click", function(e) {
+				e.preventDefault();
+				console.log("Add Mtn Button Clicked");
+				addMtn();
+			});
+
+	document.getElementById("delete").addEventListener("click", function(e) {
+		e.preventDefault();
+		console.log("Delete Mtn Button Clicked");
+		var mtnId = document.deleteByIdForm.mid.value;
+		console.log(mtnId);
+		if (!isNaN(mtnId) && mtnId > 0) {
+			deleteSingleMtn(mtnId);
+		}
+	});
 }
 
-function getSingleMtn(mtnId){
+
+
+function getSingleMtn(mtnId) {
 	let xhr = new XMLHttpRequest();
 
 	xhr.open('GET', 'api/mountains/' + mtnId, true);
@@ -39,7 +60,7 @@ function getSingleMtn(mtnId){
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var mountain = JSON.parse(xhr.responseText);
 			console.log(mountain);
-			display(mountain); // TODO write display method
+			display(mountain);
 		}
 
 		if (xhr.readyState === 4 && xhr.status >= 400) {
@@ -47,18 +68,39 @@ function getSingleMtn(mtnId){
 		}
 	};
 
-	xhr.send();
+	xhr.send(null);
 }
 
-function getAllMtn(){
+
+function getAllMtn() {
 	let xhr = new XMLHttpRequest();
-	
+
 	xhr.open('GET', 'api/mountains/', true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var mountains = JSON.parse(xhr.responseText);
 			console.log(mountains);
-			displayAll(mountains); // TODO write displayAll mountains method
+			displayAll(mountains);
+		}
+
+		if (xhr.readyState === 4 && xhr.status >= 400) {
+			console.error(xhr.status + ': ' + xhr.responseText);
+		}
+	};
+
+	xhr.send();
+}
+
+function deleteSingleMtn(mtnId) {
+	let xhr = new XMLHttpRequest();
+	
+	xhr.open('DELETE', 'api/mountains/delete/' + mtnId, true);
+	console.log(mtnId);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 && xhr.status < 400) {
+			var mountain = JSON.parse(xhr.responseText);
+			console.log(mountain);
+			display(mountain);
 		}
 		
 		if (xhr.readyState === 4 && xhr.status >= 400) {
@@ -66,111 +108,153 @@ function getAllMtn(){
 		}
 	};
 	
-	xhr.send();
+	xhr.send(null);
 }
 
-function addMtn(){
+function addMtn() {
 	let xhr = new XMLHttpRequest();
-	
+
 	xhr.open('POST', 'api/mountains/create', true);
-	
+
 	xhr.setRequestHeader("Content-type", "application/json");
-	
+
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var newMountain = JSON.parse(xhr.responseText);
 			console.log(newMountain);
-			display(newMountain); // TODO write display mountains method
+			display(newMountain); 
 		}
-		
+
 		if (xhr.readyState === 4 && xhr.status >= 400) {
 			console.error(xhr.status + ': ' + xhr.responseText);
 		}
-		
-	
+
 	};
-	let form  = document.addMtnForm;
+	
+	let form = document.addMtnForm;
 	let newMtn = {
-			name: form.name.value,
-			visited: form.visited.value,
-			location: form.location.value,
-			rating: form.rating.value,
-			description: form.description.value
+		name : form.name.value,
+		visited : form.visited.value,
+		location : form.location.value,
+		rating : form.rating.value,
+		description : form.description.value
+	}
+	
+	xhr.send(JSON.stringify(newMtn));
+}
+
+function updateMtn(mtnId) {
+
+	var xhr = new XMLHttpRequest();
+	console.log(mtnId);
+
+	xhr.open('PUT', 'api/mountains/update/' + mtnId, true);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	console.log(mtnId);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status < 400) {
+			var newMountain = JSON.parse(xhr.responseText);
+			console.log(newMountain);
+			display(newMountain);
+		} if (xhr.readyState === 4 && xhr.status >= 400) {
+			console.error(xhr.status + ': ' + xhr.responseText);
+		}
+	}
+	let form = document.updateMtnForm;
+	
+	let newMtn = {
+		name : form.name.value,
+		visited : form.visited.value,
+		location : form.location.value,
+		rating : form.rating.value,
+		description : form.description.value
 	}
 	xhr.send(JSON.stringify(newMtn));
 }
 
-function display(mountain){
+function display(mountain) {
 	var mtnDiv = document.getElementById("mtnData");
-	mtnDiv.textContent= " ";
-	
+	mtnDiv.textContent = " ";
+
 	let nameH2 = document.createElement("h2");
 	nameH2.textContent = mountain.name;
 	mtnDiv.appendChild(nameH2);
 	
-	let visitedLi = document.createElement("li");
-	visitedLi.textContent = mountain.visited;
-	mtnDiv.appendChild(visitedLi);
-	
+	let idLi = document.createElement("li");
+	idLi.textContent = mountain.id;
+	mtnDiv.appendChild(idLi);
+
 	let locationLi = document.createElement("li");
 	locationLi.textContent = mountain.location;
 	mtnDiv.appendChild(locationLi);
-	
+
 	let ratingLi = document.createElement("li");
 	ratingLi.textContent = mountain.rating;
 	mtnDiv.appendChild(ratingLi);
-	
+
 	let descriptionLi = document.createElement("li");
 	descriptionLi.textContent = mountain.description;
 	mtnDiv.appendChild(descriptionLi);
 	
+	let visitedLi = document.createElement("li");
+	visitedLi.textContent = mountain.visited;
+	mtnDiv.appendChild(visitedLi);
+
 }
 
-function displayAll(mountains){
+function displayAll(mountains) {
 	var mtnDiv = document.getElementById("mtnData");
-	mtnDiv.textContent= " ";
-	
+	mtnDiv.textContent = " ";
+
 	let table = document.createElement("table");
 	mtnDiv.appendChild(table);
-	
-	mountains.forEach(function(mountain, index) {
+
+	mountains.forEach(function(mountain) {
 		let tr = document.createElement("tr");
 		let td = document.createElement("td");
-		
+
 		td.textContext = mountain.name;
 		tr.appendChild(td);
-		
+
 		let nameH2 = document.createElement("h2");
 		nameH2.textContent = mountain.name;
 		mtnDiv.appendChild(nameH2);
 		
-		td.textContext = mountain.visited;
+		td.textContext = mountain.id;
 		tr.appendChild(td);
 		
-		let visitedLi = document.createElement("li");
-		visitedLi.textContent = mountain.visited;
-		mtnDiv.appendChild(visitedLi);
-		
+		let idLi = document.createElement("li");
+		idLi.textContent = mountain.id;
+		mtnDiv.appendChild(idLi);
+
 		td.textContext = mountain.location;
 		tr.appendChild(td);
-		
+
 		let locationLi = document.createElement("li");
 		locationLi.textContent = mountain.location;
 		mtnDiv.appendChild(locationLi);
-		
+
 		td.textContext = mountain.rating;
 		tr.appendChild(td);
-		
+
 		let ratingLi = document.createElement("li");
 		ratingLi.textContent = mountain.rating;
 		mtnDiv.appendChild(ratingLi);
-		
+
 		td.textContext = mountain.description;
 		tr.appendChild(td);
-		
+
 		let descriptionLi = document.createElement("li");
 		descriptionLi.textContent = mountain.description;
 		mtnDiv.appendChild(descriptionLi);
+		
+		td.textContext = mountain.visited;
+		tr.appendChild(td);
+
+		let visitedLi = document.createElement("li");
+		visitedLi.textContent = mountain.visited;
+		mtnDiv.appendChild(visitedLi);
+
 	});
-	
+
 }

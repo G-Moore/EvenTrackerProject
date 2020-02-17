@@ -2,21 +2,33 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Mountain DB</title>
   </head>
   <body>
+  <h2>Mountain DataBase</h2>
+  
+  <button name="showAll" id = "showAll">Show All Mountains</button><br><br>
   
    <form name="showByIdForm">
     <input type="number" name="mid">
     <button name="lookup" id = "lookup">Show Mountain By Id</button><br><br>
   </form> 
   
+   <form name="deleteByIdForm">
+    <input type="number" name="mid">
+    <button name="delete" id = "delete">Delete Mountain By Id</button><br><br>
+  </form> 
+  
+  
    <form name="addMtnForm">
-    <input type="text" name="name" placeholder = "Mountain Name"><br>
-    
-    Have You Visited<br>
+   <h3>Add A New Mountain</h3>
+   
+    <a>Have You Visited</a>
     <input type="radio" name="visited" value = "true">Yes
     <input type="radio" name="visited" value = "false">No<br>
+    
+    <input type="text" name="name" placeholder = "Mountain Name"><br>
+    
     
     <input type="text" name="location" placeholder = "Location"><br>
     <input type="text" name="rating" placeholder = "Rating"><br>
@@ -24,7 +36,20 @@
     <button name="submitAddMtn" id = "submitAddMtn">Add Mountain</button><br><br>
   </form> 
   
-  <button name="showAll" id = "showAll">Show All Mountains</button><br><br>
+   <form name="updateMtnForm">
+   <h3>Update A Mountain</h3>
+   
+    <a>Have You Visited</a>
+    <input type="radio" name="visited" value = "true">Yes
+    <input type="radio" name="visited" value = "false">No<br>
+    <input type="number" name="mid" placeholder = "Mountain ID"><br>
+    <input type="text" name="name" placeholder = "Mountain Name"><br>  
+    <input type="text" name="location" placeholder = "Location"><br>
+    <input type="text" name="rating" placeholder = "Rating"><br>
+    <input type="text" name="description" placeholder = "Description"><br>
+    <button name="submitUpdateMtn" id = "submitUpdateMtn">Update Mountain</button><br><br>
+  </form> 
+  
   
  <div id = "mtnData"></div>
   
