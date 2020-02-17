@@ -59,7 +59,6 @@ function getSingleMtn(mtnId) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var mountain = JSON.parse(xhr.responseText);
-			console.log(mountain);
 			display(mountain);
 		}
 
@@ -99,7 +98,6 @@ function deleteSingleMtn(mtnId) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var mountain = JSON.parse(xhr.responseText);
-			console.log(mountain);
 			display(mountain);
 		}
 		
@@ -173,32 +171,46 @@ function updateMtn(mtnId) {
 }
 
 function display(mountain) {
+	
+	if(mountain.id === NaN){
 	var mtnDiv = document.getElementById("mtnData");
 	mtnDiv.textContent = " ";
-
+	
 	let nameH2 = document.createElement("h2");
-	nameH2.textContent = mountain.name;
+	nameH2.textContent = "Mountain Name: " +  mountain.name;
 	mtnDiv.appendChild(nameH2);
 	
 	let idLi = document.createElement("li");
-	idLi.textContent = mountain.id;
+	idLi.textContent = "ID: " +  mountain.id;
 	mtnDiv.appendChild(idLi);
 
 	let locationLi = document.createElement("li");
-	locationLi.textContent = mountain.location;
+	locationLi.textContent = "Location: " + mountain.location;
 	mtnDiv.appendChild(locationLi);
 
 	let ratingLi = document.createElement("li");
-	ratingLi.textContent = mountain.rating;
+	ratingLi.textContent = "Rating: " + mountain.rating;
 	mtnDiv.appendChild(ratingLi);
 
-	let descriptionLi = document.createElement("li");
-	descriptionLi.textContent = mountain.description;
-	mtnDiv.appendChild(descriptionLi);
-	
 	let visitedLi = document.createElement("li");
-	visitedLi.textContent = mountain.visited;
+	visitedLi.textContent = "Visited: " + mountain.visited;
 	mtnDiv.appendChild(visitedLi);
+	
+	let descriptionLi = document.createElement("li");
+	descriptionLi.textContent = "Description: " + mountain.description;
+	mtnDiv.appendChild(descriptionLi);
+	} 
+	else {
+		
+		var mtnDiv = document.getElementById("mtnData");
+		mtnDiv.textContent = " ";
+		
+		let presH2 = document.createElement("h2");
+		presH2.textContent = "Mountain Not Present";
+		mtnDiv.appendChild(presH2);
+		
+		console.log("Empty");
+	}
 
 }
 
@@ -217,43 +229,44 @@ function displayAll(mountains) {
 		tr.appendChild(td);
 
 		let nameH2 = document.createElement("h2");
-		nameH2.textContent = mountain.name;
+		nameH2.textContent = "Mountain Name: " + mountain.name;
 		mtnDiv.appendChild(nameH2);
 		
 		td.textContext = mountain.id;
 		tr.appendChild(td);
 		
 		let idLi = document.createElement("li");
-		idLi.textContent = mountain.id;
+		idLi.textContent = "ID: " + mountain.id;
 		mtnDiv.appendChild(idLi);
 
 		td.textContext = mountain.location;
 		tr.appendChild(td);
 
 		let locationLi = document.createElement("li");
-		locationLi.textContent = mountain.location;
+		locationLi.textContent = "Location: " + mountain.location;
 		mtnDiv.appendChild(locationLi);
 
 		td.textContext = mountain.rating;
 		tr.appendChild(td);
 
 		let ratingLi = document.createElement("li");
-		ratingLi.textContent = mountain.rating;
+		ratingLi.textContent = "Rating: " +mountain.rating;
 		mtnDiv.appendChild(ratingLi);
-
-		td.textContext = mountain.description;
-		tr.appendChild(td);
-
-		let descriptionLi = document.createElement("li");
-		descriptionLi.textContent = mountain.description;
-		mtnDiv.appendChild(descriptionLi);
 		
 		td.textContext = mountain.visited;
 		tr.appendChild(td);
 
 		let visitedLi = document.createElement("li");
-		visitedLi.textContent = mountain.visited;
+		visitedLi.textContent = "Visited: " +mountain.visited;
 		mtnDiv.appendChild(visitedLi);
+
+		td.textContext = mountain.description;
+		tr.appendChild(td);
+
+		let descriptionLi = document.createElement("li");
+		descriptionLi.textContent = "Description: " +mountain.description;
+		mtnDiv.appendChild(descriptionLi);
+		
 
 	});
 
