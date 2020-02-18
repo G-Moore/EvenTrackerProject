@@ -31,9 +31,8 @@
 
 
 ### Technologies Used
-
-XMLHttpRequest : GET/PUT/POST/DELETE
-JSON : javascript object notation : return objects as a JSON and parse with javascript.
-RESTfull :
-Java
-Javascript
+* XMLHttpRequest : GET/PUT/POST/DELETE
+* JSON : javascript object notation : return objects as a JSON and parse with javascript.
+* RESTfull :
+* Java
+* Javascript
