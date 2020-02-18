@@ -12,11 +12,11 @@
 ### Paths
 
 #### AWS
-* 3.20.59.167/EventTracker/
-* 3.20.59.167/EventTracker/api/mountains/{id}
-* 3.20.59.167/EventTracker/api/mountains/create
-* 3.20.59.167/EventTracker/api/mountains/update/{id}
-* 3.20.59.167/EventTracker/api/mountains/delete/{id}
+* 3.20.59.167:8080/EventTracker/
+* 3.20.59.167:8080/EventTracker/api/mountains/{id}
+* 3.20.59.167:8080/EventTracker/api/mountains/create
+* 3.20.59.167:8080/EventTracker/api/mountains/update/{id}
+* 3.20.59.167:8080/EventTracker/api/mountains/delete/{id}
 
 #### localhost
 * localhost:8090/api/mountains
